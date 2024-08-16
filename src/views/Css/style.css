@@ -1,0 +1,149 @@
+:root{
+  --button-border-color: #115711;
+  --backgrond-tools-color: #0da32e;
+  --hover-backgrondColor-buttons: #44a844; 
+  --tester-border-color: rgb(75, 9, 9);
+}
+
+
+body, html {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif; 
+}
+
+main {
+  display: flex;
+  flex-direction: column; 
+  width: 100vw;
+  height: 100vh;
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  border: 5px solid var(--tester-color);
+  height: 18%;
+  width: 100%;
+}
+section, .tools {
+  height: 50%; 
+ 
+}
+section {
+  display: flex;
+  align-items: self-end;
+  justify-content: start;
+  background-color: #18e95e;
+}
+
+.tools{
+  width: 100%;
+  background-color: var(--backgrond-tools-color);
+  border-top: 2px solid var(--button-border-color);
+  margin-top: -2px;
+  z-index: 0;
+}
+.tab-button {
+  width: 100px;
+  height: 50px;
+  margin: 0px 5px 0px 5px;
+  color: rgb(0, 0, 0);
+  background-color: #0da32e;
+  cursor: pointer;
+  font-size: 16px;
+  min-height: 50px;
+  border: none;
+  border-top-left-radius:  10px;
+  border-top-right-radius:  10px;
+  border: 2px  solid var(--button-border-color);
+  border-bottom:  2px solid var(--backgrond-tools-color);
+  z-index: 1;
+}
+
+.tab-button:hover {
+  background-color: var(--hover-backgrondColor-buttons);
+  border-bottom: 2px inset rgba(18, 3, 71, 0.26);
+}
+
+#content-area {
+  width: 100%;
+  flex: 1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Barra Lateral */
+.sidebar {
+  height: 100%;
+  width: 20vw; 
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #000000;
+  color: #fff;
+  overflow-x: hidden;
+  transition: 1 s; /* Transição suave para expandir/recolher */
+  transform: translateX(  ); /* Inicialmente fora da tela */
+}
+
+.sidebar.open {
+  transform: translateX(-0); /* Mostrar a barra lateral */
+}
+
+.sidebar .close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.tab-button:hover {
+  background-color: #058f05;
+}
+
+/* Botões de Abrir/Fechar Barra Lateral */
+.open-btn {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: #ffffff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+/* Esconde o botão de abertura quando a barra lateral está aberta */
+.sidebar.open ~ main .open-btn {
+  display: none;
+}
