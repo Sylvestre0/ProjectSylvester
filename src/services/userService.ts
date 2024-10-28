@@ -18,7 +18,4 @@ export class UserService {
     return await this.userRepository.addUser(name, email);
   }
 
-  async listUsers() {
-    return await this.userRepository.getAllUsers();
-  }
 }
