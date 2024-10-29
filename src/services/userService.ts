@@ -1,5 +1,6 @@
 import { UserRepository } from '../repositories/userRepository';
 import { isValidEmail, isValidName } from '../helpers/validationHelper';
+import { hashPassword } from '../helpers/hashHelper';
 
 export class UserService {
   private userRepository: UserRepository;
@@ -15,7 +16,7 @@ export class UserService {
     if (!isValidEmail(email)) {
       throw new Error('Email inválido');
     }
-    return await this.userRepository.addUser(name, email);
+    return await this.userRepository.addUser(name, email,Password,googleId);
   }
 
 }

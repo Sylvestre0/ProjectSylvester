@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { UserRepository } from '../repositories/userRepository';
+import { AuthService } from '../services/authService';
 
 const userRepository = new UserRepository();
   
