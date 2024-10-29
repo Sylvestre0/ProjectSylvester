@@ -1,6 +1,5 @@
 import { UserRepository } from '../repositories/userRepository';
-import { isValidEmail, isValidName } from '../helpers/validationHelper';
-import { hashPassword } from '../helpers/hashHelper';
+
 
 export class UserService {
   private userRepository: UserRepository;
@@ -9,14 +8,18 @@ export class UserService {
     this.userRepository = new UserRepository();
   }
 
-  async createUser(name: string, email: string) {
+  async auth(name: string, email: string,password:string,googleId:string) {
     if (!isValidName(name)) {
       throw new Error('Nome inválido');
     }
     if (!isValidEmail(email)) {
       throw new Error('Email inválido');
     }
-    return await this.userRepository.addUser(name, email,Password,googleId);
+    if (!isValidPassword(password)) {
+      throw new Error('Senha inválida');
+    }
+    const user = await this.userRepository.addUser(name, email, passwordHash, googleId);
+    return user;
   }
 
 }
