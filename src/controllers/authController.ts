@@ -23,3 +23,13 @@ export const register = async (req: Request, res: Response) => {
     }
   }
 };
+export const login = async (req: Request, res: Response) => {
+  const { email, password} = req.body;
+
+  try {
+    const user = await authService.loginUser(email, password);
+    res.status(200).json({ message: 'Login bem-sucedido', user });
+  } catch (err: any) {
+    res.status(401).json({ error: err.message });
+  }
+};

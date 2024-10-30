@@ -1,7 +1,6 @@
 import { UserRepository } from '../repositories/userRepository';
 import { hashPassword, comparePassword } from '../helpers/hashHelper';
 import { createSession } from '../helpers/sessionHelper';
-import { typeUser } from '../models/userModel'
 import { isValidEmail, isValidName, isValidPassword } from '../helpers/validationHelper';
 
 export class AuthService {
@@ -11,7 +10,7 @@ export class AuthService {
     this.userRepository = new UserRepository();
   }
 
-  async registerUser(name: string, email: string, password: string, googleId: string): Promise<typeUser> {
+  async registerUser(name: string, email: string, password: string, googleId: string){
     // Validação dos dados
     if (!isValidName(name)) {
       throw new Error('Nome inválido');
@@ -38,5 +37,14 @@ export class AuthService {
         throw new Error('Erro no servidor.');
       }
     }
+  }
+  async loginUser(email: string, password: string) {
+    const user = await this.userRepository.getUserByEmail(email);
+    if (!user) throw new Error('Usuário não encontrado');
+    const isPasswordValid = comparePassword(password, user.passwordhash);
+    if (!isPasswordValid) throw new Error('Senha incorreta');
+    
+    createSession(user.id);
+    return user;
   }
 }

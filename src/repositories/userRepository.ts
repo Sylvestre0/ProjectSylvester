@@ -10,18 +10,13 @@ export class UserRepository {
   }
 
   async addUser(name: string,email: string,passwordHash: string,googleId: string,): Promise<typeUser> {
-    const queryText = "INSERT INTO users(name, email, passwordHash, googleId) VALUES($1, $2, $3, $4) RETURNING *";
+    const queryText = "INSERT INTO users(name, email, passwordhash, googleid) VALUES($1, $2, $3, $4) RETURNING *";
     const { rows } = await this.database.query(queryText, [name,email,passwordHash,googleId]);
     return rows[0];
   }
-  async findPassword(email: string): Promise<String> {
-    const queryText = "SELECT passwordHash FROM users WHERE email = $1";
-    const { rows } = await this.database.query(queryText, [email]);
-    return rows[0].passwordHash;
-  }
-  async findEmail(email: string): Promise<String> {
-    const queryText = "SELECT email FROM users WHERE email = $1";
-    const { rows } = await this.database.query(queryText, [email]);
-    return rows[0].email;
+
+  async getUserByEmail(email: string): Promise<typeUser | null> {
+    const { rows } = await this.database.query('SELECT name,email, passwordhash FROM users WHERE email = $1', [email]);
+    return rows[0] || null;
   }
 }
