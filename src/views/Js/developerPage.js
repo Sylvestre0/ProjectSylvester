@@ -1,45 +1,81 @@
-document.querySelectorAll('.tab-button').forEach(button => {
+(function() {
+    const bottons = document.querySelectorAll(".botton");
+    const caixaLeft = document.querySelector(".sideleft-bar");
+    const caixaRight = document.querySelector(".sideright-bar");
+    const caixaFooter = document.querySelector("footer");
+    const content = document.querySelector(".content");
+    const header = document.querySelector("header")
+
+    let isLeftOpen = true;
+    let isRightOpen = true;
+
+    function adjustContent() {
+        let newWidth = 100;
+        if (isLeftOpen) newWidth -= 18;
+        if (isRightOpen) newWidth -= 18;
+        
+        header.style.width = `${newWidth}vw`
+        header.style.left = isLeftOpen ? "18vw" : "0";
+        content.style.width = `${newWidth}vw`;
+        content.style.left = isLeftOpen ? "18vw" : "0";
+    }
+
+    function toggleBar(direcao) {
+        if (direcao === "left") {
+            caixaLeft.classList.toggle("openleft");
+            isLeftOpen = !isLeftOpen; 
+        } else if (direcao === "right") {
+            caixaRight.classList.toggle("openright");
+            isRightOpen = !isRightOpen;
+        } else if (direcao === "botton") {
+            caixaFooter.classList.toggle("openbotton");
+            content.classList.toggle("footerclose")
+        }
+        adjustContent();    
+    }
+
+    function options(botton) {
+        botton.addEventListener("click", (event) => {
+            const direcao = event.target.getAttribute("data-move");
+            toggleBar(direcao);
+        });
+    }
+
+    bottons.forEach(botton => {
+        options(botton);
+    });
+
+    adjustContent();
+})();
+
+document.querySelectorAll('.botoes').forEach(button => {
     button.addEventListener('click', () => {
-        const tab = button.getAttribute('data-tab');
-        updateContent(tab);
+        const tab = button.getAttribute('data-value');
+        const content = document.querySelector(".options");
+
+        document.querySelectorAll('.botoes').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        button.classList.add('active');
+
+        if (tab === "6") {
+            content.classList.toggle("closearea");
+        } else {
+            updateContent(tab, content);
+        }
     });
 });
 
-function updateContent(tab) {
-    const contentArea = document.getElementById('content-area');
-    contentArea.innerHTML = ''; 
+function updateContent(tab, content) {
+    const contentAreas = document.querySelectorAll(".optionvalue");
 
-    switch (tab) {
-        case 'html':
-            contentArea.innerHTML = '<p>Este é o conteúdo de <strong>HTML</strong>.</p>';
-            break;
-        case 'css':
-            contentArea.innerHTML = '<p>Este é o conteúdo de <strong>CSS</strong>.</p>';
-            break;
-        case 'js':
-            contentArea.innerHTML = '<p>Este é o conteúdo de <strong>JavaScript</strong>.</p>';
-            break;
-        default:
-            contentArea.innerHTML = '<p>Selecione uma opção acima.</p>';
+    contentAreas.forEach(section => {
+        section.style.display = "none";
+    });
+
+    const targetSection = contentAreas[parseInt(tab) - 1];
+    if (targetSection) {
+        if (content.classList.contains("closearea")) content.classList.toggle("closearea");
+        targetSection.style.display = "block";
     }
 }
-
-
-function toggleSidebar() {
-    const sidebar = document.getElementById('sidebar');
-    
-    // Alterna a classe 'open' para mostrar ou esconder a barra lateral
-    sidebar.classList.toggle('open');
-    
-    // Atualiza o texto do botão dependendo do estado da barra lateral
-    const openBtn = document.querySelector('.open-btn');
-    const closeBtn = document.querySelector('.close-btn');
-    
-    if (sidebar.classList.contains('open')) {
-      openBtn.style.display = 'none';
-      closeBtn.style.display = 'block';
-    } else {
-      openBtn.style.display = 'block';
-      closeBtn.style.display = 'none';
-    }
-  }
