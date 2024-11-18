@@ -78,4 +78,37 @@ function updateContent(tab, content) {
         if (content.classList.contains("closearea")) content.classList.toggle("closearea");
         targetSection.style.display = "block";
     }
+}function processarElemento(elemento, nivel = 0, resultado = [], left = 7) {
+    // Cria a string com a estrutura HTML desejada para o elemento
+    resultado.push(`
+        <div class="layer">
+            <div class="cube" style="left: ${left}%;">
+                <span>${elemento.tagName}</span>
+                <span>${nivel}</span>
+            </div>
+        </div>    
+    `);
+
+    // Itera sobre os filhos do elemento
+    for (const filho of elemento.children) {
+        processarElemento(filho, nivel + 1, resultado, left + 5);  // Incrementa 5% a cada nível
+    }
+
+    return resultado;
+}
+
+// Seleciona o elemento principal (main, por exemplo)
+const main = document.querySelector(".content");
+
+// Seleciona o contêiner onde você quer adicionar os elementos
+const sideLeftBar = document.querySelector(".teste");
+
+if (main && sideLeftBar) {
+    // Processa o conteúdo e acumula o resultado
+    const resultado = processarElemento(main);
+
+    // Adiciona todo o conteúdo ao .sideleft-bar de uma vez
+    sideLeftBar.innerHTML = resultado.join('');
+} else {
+    console.error('Elemento "main" ou ".sideleft-bar" não encontrado!');
 }
