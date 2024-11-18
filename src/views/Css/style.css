@@ -360,7 +360,15 @@ i:hover {
   left: 5%;
   background-color: inherit;
 }
-
+.sideleft-bar > h2{
+  width: inherit;
+  position: absolute;
+  top: 0px;
+  text-align: center;
+  color: white;
+  margin: 0.3vw;
+  font-size: 2vw;
+}
 
 
 
