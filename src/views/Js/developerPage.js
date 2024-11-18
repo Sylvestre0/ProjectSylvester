@@ -78,37 +78,59 @@ function updateContent(tab, content) {
         if (content.classList.contains("closearea")) content.classList.toggle("closearea");
         targetSection.style.display = "block";
     }
-}function processarElemento(elemento, nivel = 0, resultado = [], left = 7) {
-    // Cria a string com a estrutura HTML desejada para o elemento
+}
+
+
+function processarElemento(elemento, nivel = 0, resultado = [], left = 7) {
+    // Adiciona a tag de abertura
     resultado.push(`
         <div class="layer">
-            <div class="cube" style="left: ${left}%;">
-                <span>${elemento.tagName}</span>
+            <div class="cube" style="left: ${left}%; background-color: #e3f2fd;">
+                <span>&lt;${elemento.tagName.toLowerCase()}&gt;</span>
                 <span>${nivel}</span>
             </div>
-        </div>    
+        </div>
     `);
 
     // Itera sobre os filhos do elemento
     for (const filho of elemento.children) {
-        processarElemento(filho, nivel + 1, resultado, left + 5);  // Incrementa 5% a cada nível
+        processarElemento(filho, nivel + 1, resultado, left + 8);
     }
+
+    // Adiciona a tag de fechamento após processar os filhos
+    resultado.push(`
+        <div class="layer">
+            <div class="cube" style="left: ${left}%; background-color: #ffcdd2;">
+                <span>&lt;/${elemento.tagName.toLowerCase()}&gt;</span>
+                <span>${nivel}</span>
+            </div>
+        </div>
+    `);
 
     return resultado;
 }
 
-// Seleciona o elemento principal (main, por exemplo)
+// Seleciona o elemento principal
 const main = document.querySelector(".content");
 
 // Seleciona o contêiner onde você quer adicionar os elementos
-const sideLeftBar = document.querySelector(".teste");
+const sideLeftBar = document.querySelector(".container");
 
-if (main && sideLeftBar) {
-    // Processa o conteúdo e acumula o resultado
-    const resultado = processarElemento(main);
+// Função para atualizar o conteúdo
+function atualizarConteudo() {
+    if (main && sideLeftBar) {
+        // Processa o conteúdo e acumula o resultado
+        const resultado = processarElemento(main);
 
-    // Adiciona todo o conteúdo ao .sideleft-bar de uma vez
-    sideLeftBar.innerHTML = resultado.join('');
-} else {
-    console.error('Elemento "main" ou ".sideleft-bar" não encontrado!');
+        // Adiciona todo o conteúdo ao .sideleft-bar de uma vez
+        sideLeftBar.innerHTML = resultado.join('');
+    } else {
+        console.error('Elemento ".content" ou ".teste" não encontrado!');
+    }
 }
+
+// Executa a função pela primeira vez imediatamente
+atualizarConteudo();
+
+// Define o intervalo para executar a função a cada 3 segundos (3000ms)
+setInterval(atualizarConteudo, 3000);

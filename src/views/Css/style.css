@@ -305,18 +305,26 @@ i:hover {
 }
 
 .teste{
-  background-color: rgb(159, 156, 156);
   width: 91%;
-  height: inherit;
+  height: auto;
   position: relative;
   right: -5%;
+  display: flex;
+  align-items: center;
+}
+.container{
+  width: 91%;
+  height: auto;
+  position: relative;
+  right: -5%;
+  background-color: rgb(255, 255, 255, 0.1);
 }
 .layer{
-  background-color: red;
-  height: 3%;
+  height: 3vh;
   width: 100%;
   display: flex;
   align-items: center;
+  margin-top: 0.5vh;
 }
 .cube{
   height: 90%;
